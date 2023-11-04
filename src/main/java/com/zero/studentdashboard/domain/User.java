@@ -6,6 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * This class generates table called Users in database.
+ */
+
 @Getter
 @Setter
 @Entity(name = "users")

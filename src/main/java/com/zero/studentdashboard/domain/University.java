@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * This class generates table called University in database.
+ */
 @Getter
 @Setter
 @Entity
