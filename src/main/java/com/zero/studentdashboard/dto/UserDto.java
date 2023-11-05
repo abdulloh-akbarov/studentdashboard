@@ -1,5 +1,6 @@
 package com.zero.studentdashboard.dto;
 
+import com.zero.studentdashboard.domain.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
@@ -16,6 +17,7 @@ import org.hibernate.validator.constraints.Length;
  * @param password  Password for the user.
  */
 public record UserDto(
+        Long id,
         @NotBlank(message = "First name cannot be blank.")
         String firstName,
         @NotBlank(message = "Last name cannot be blank.")
@@ -29,4 +31,7 @@ public record UserDto(
         @NotBlank(message = "Password cannot be blank.")
         @Length(min = 8, max = 32, message = "Password cannot be less than 8 and greater than 32")
         String password) {
+        public User toEntity(){
+                return new User(id, firstName, lastName, null,username,email, password);
+        }
 }

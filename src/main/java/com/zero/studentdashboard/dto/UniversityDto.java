@@ -1,5 +1,6 @@
 package com.zero.studentdashboard.dto;
 
+import com.zero.studentdashboard.domain.University;
 import jakarta.validation.constraints.NotBlank;
 
 /**
@@ -12,8 +13,11 @@ import jakarta.validation.constraints.NotBlank;
  */
 public record UniversityDto(
         Long id,
+        @NotBlank(message = "countryId cannot be blank.")
+        Long countryId,
         @NotBlank(message = "Name cannot be blank.")
-        String name,
-        @NotBlank(message = "Location cannot be empty.")
-        String country) {
+        String name) {
+        public University toEntity(){
+                return new University(id, name, null, null);
+        }
 }

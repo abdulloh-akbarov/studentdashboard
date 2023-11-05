@@ -1,5 +1,6 @@
 package com.zero.studentdashboard.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +22,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    private String FirstName;
+    private String firstName;
 
     @Column(nullable = false)
     private String lastName;
@@ -36,6 +37,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 }

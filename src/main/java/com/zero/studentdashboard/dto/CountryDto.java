@@ -1,5 +1,6 @@
 package com.zero.studentdashboard.dto;
 
+import com.zero.studentdashboard.domain.Country;
 import jakarta.validation.constraints.NotBlank;
 
 /**
@@ -14,4 +15,7 @@ public record CountryDto(
         Long id,
         @NotBlank(message = "Name cannot be blank.")
         String name) {
+        public Country toEntity(){
+                return new Country(id, name, null);
+        }
 }
