@@ -32,6 +32,6 @@ public record UserDto(
         @Length(min = 8, max = 32, message = "Password cannot be less than 8 and greater than 32")
         String password) {
         public User toEntity(){
-                return new User(id, firstName, lastName, null,username,email, password);
+                return new User(id, firstName, lastName, null,username,email, password, null);
         }
 }

@@ -25,6 +25,6 @@ public class Country {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<University> universities = new ArrayList<>();
 }

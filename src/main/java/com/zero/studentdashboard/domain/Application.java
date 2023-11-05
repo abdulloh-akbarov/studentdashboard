@@ -7,31 +7,35 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * This class generates table called University in database.
+ * This class generates table called Application in database.
  */
+
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class University {
+public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false)
-    private String name;
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
+
+    @Column(nullable = false)
+    private String email;
+
+    @ManyToOne
+    @Column(nullable = false)
+    private Course course;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "country_id", nullable = false)
-    private Country country;
-
-    @OneToMany(mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Course> courses = new ArrayList<>();
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }
-

@@ -1,6 +1,6 @@
 package com.zero.studentdashboard.model;
 
-import com.zero.studentdashboard.domain.UserRole;
+import com.zero.studentdashboard.domain.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +11,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * CustomUserDetails class represents a custom implementation of the Spring Security UserDetails interface.
+ * It is used to store user details and authorities for authentication and authorization purposes.
+ *
+ * @author Abdulloh Akbarov
+ */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +26,14 @@ public class CustomUserDetails implements UserDetails {
     private String username;
     private String password;
     private GrantedAuthority authority;
+
+    /**
+     * Constructor for CustomUserDetails class.
+     *
+     * @param username  The username of the user.
+     * @param password  The password of the user.
+     * @param userRole  The user's role, which will be used to create the user's authority.
+     */
     public CustomUserDetails(String username, String password, UserRole userRole) {
         this.username = username;
         this.password = password;
