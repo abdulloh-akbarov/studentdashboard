@@ -18,6 +18,12 @@ public record CourseDto(
 
         @NotBlank(message = "Name cannot be blank.")
         String name) {
+
+        /**
+         * Converts the DTO to an entity representation.
+         *
+         * @return A Cource entity representing the application information.
+         */
         public Course toEntity(){
                 return new Course(id, name, null);
         }

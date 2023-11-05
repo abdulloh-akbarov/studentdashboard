@@ -31,6 +31,12 @@ public record UserDto(
         @NotBlank(message = "Password cannot be blank.")
         @Length(min = 8, max = 32, message = "Password cannot be less than 8 and greater than 32")
         String password) {
+
+        /**
+         * Converts the DTO to an entity representation.
+         *
+         * @return A User entity representing the application information.
+         */
         public User toEntity(){
                 return new User(id, firstName, lastName, null,username,email, null, null);
         }

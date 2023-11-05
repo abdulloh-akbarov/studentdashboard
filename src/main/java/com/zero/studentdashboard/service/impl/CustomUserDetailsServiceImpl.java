@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsServiceImpl implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final UserRepository repository;
 
     /**
      * Load user details by username from the repository and create a CustomUserDetails object.
@@ -30,17 +30,15 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username).orElse(null);
+        User user = repository.findByUsername(username).orElse(null);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
 
-        CustomUserDetails customUserDetails = new CustomUserDetails(
+        return new CustomUserDetails(
                 user.getUsername(),
                 user.getUserRole()
         );
-
-        return customUserDetails;
     }
 }

@@ -23,7 +23,7 @@ import java.util.Map;
 @Log4j2
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
+    private final UserRepository repository;
     private final PasswordEncoder encoder;
     private final JwtTokenUtil util;
 
@@ -39,13 +39,13 @@ public class UserServiceImpl implements UserService {
     public Response register(UserDto userDto) {
         log.info(">> register: username={}, email={}", userDto.username(), userDto.email());
 
-        boolean existsByUsername = userRepository.existsByUsername(userDto.username());
+        boolean existsByUsername = repository.existsByUsername(userDto.username());
         if (existsByUsername){
             log.warn("<< register: Username exist: " + userDto.username());
             return new Response(Message.USERNAME_EXIST);
         }
 
-        boolean existsByEmail = userRepository.existsByEmail(userDto.email());
+        boolean existsByEmail = repository.existsByEmail(userDto.email());
         if (existsByEmail){
             log.warn("<< register: Email exist: " + userDto.email());
             return new Response(Message.EMAIL_EXIST);
@@ -54,13 +54,13 @@ public class UserServiceImpl implements UserService {
             User entity = userDto.toEntity();
             entity.setUserRole(UserRole.STUDENT);
             entity.setPassword(encoder.encode(userDto.password()));
-            userRepository.save(entity);
+            repository.save(entity);
             Map<String, String> token = getToken(entity);
 
             log.info("<< register: User Created Successfully ");
             return new Response(Message.SUCCESS, token);
         } catch (Exception e){
-            log.error("<< register: User cannot be saved: " + e.getMessage());
+            log.error("<< save: Exception thrown while saving message: " + e.getMessage());
             return new Response(Message.UNPROCESSABLE);
         }
     }
@@ -79,9 +79,9 @@ public class UserServiceImpl implements UserService {
         String loginType = loginDto.loginType();
         User user;
         if (loginType.contains("@")){
-            user = userRepository.findByEmail(loginType).orElse(null);
+            user = repository.findByEmail(loginType).orElse(null);
         } else{
-            user = userRepository.findByUsername(loginType).orElse(null);
+            user = repository.findByUsername(loginType).orElse(null);
         }
 
         if (user == null){
@@ -94,6 +94,8 @@ public class UserServiceImpl implements UserService {
             log.info("<< login: Successfully logged in");
             return new Response(Message.SUCCESS, token);
         }
+
+        log.warn("<< login: Authentication failed");
         return new Response(Message.AUTHENTICATION_FAILED);
     }
 

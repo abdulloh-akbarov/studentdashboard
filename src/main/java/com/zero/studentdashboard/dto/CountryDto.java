@@ -15,6 +15,12 @@ public record CountryDto(
         Long id,
         @NotBlank(message = "Name cannot be blank.")
         String name) {
+
+        /**
+         * Converts the DTO to an entity representation.
+         *
+         * @return A Country entity representing the application information.
+         */
         public Country toEntity(){
                 return new Country(id, name, null);
         }
