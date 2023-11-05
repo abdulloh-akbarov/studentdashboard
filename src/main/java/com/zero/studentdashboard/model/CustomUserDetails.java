@@ -24,25 +24,27 @@ import java.util.Collections;
 public class CustomUserDetails implements UserDetails {
 
     private String username;
-    private String password;
     private GrantedAuthority authority;
 
     /**
      * Constructor for CustomUserDetails class.
      *
      * @param username  The username of the user.
-     * @param password  The password of the user.
      * @param userRole  The user's role, which will be used to create the user's authority.
      */
-    public CustomUserDetails(String username, String password, UserRole userRole) {
+    public CustomUserDetails(String username, UserRole userRole) {
         this.username = username;
-        this.password = password;
         this.authority = new SimpleGrantedAuthority(userRole.name());
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(authority);
+    }
+
+    @Override
+    public String getPassword() {
+        return null;
     }
 
     @Override
