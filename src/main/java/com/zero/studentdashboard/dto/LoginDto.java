@@ -7,13 +7,11 @@ import jakarta.validation.constraints.NotBlank;
  * <p>
  * This record is used to create dto for user Login credentials.
  *
- * @param username User's username;.
- * @param email User's email.
+ * @param loginType User login type email or username.
  * @param password The customer's password.
  */
 public record LoginDto(
-        String username,
-        String email,
+        String loginType,
         @NotBlank(message = "password cannot be empty.")
         String password) {
 }
