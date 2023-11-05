@@ -98,6 +98,44 @@ public class UserServiceImpl implements UserService {
         log.warn("<< login: Authentication failed");
         return new Response(Message.AUTHENTICATION_FAILED);
     }
+    /**
+     * Logs in a user based on the provided login information for admin.
+     *
+     * @param loginDto The login details, which can include either the username or email and the password.
+     * @return A Response object containing a JWT token upon successful login or an error message.
+     * @see LoginDto
+     */
+    @Override
+    public Response adminlLogin(LoginDto loginDto) {
+        log.info(">> adminLogin: loginType=" + loginDto.loginType());
+
+        String loginType = loginDto.loginType();
+        User user;
+        if (loginType.contains("@")){
+            user = repository.findByEmail(loginType).orElse(null);
+        } else{
+            user = repository.findByUsername(loginType).orElse(null);
+        }
+
+        if (user == null){
+            log.warn("<< adminLogin: User not found loginType= " + loginDto.loginType());
+            return new Response(Message.USER_NOT_FOUND);
+        }
+
+        if (user.getUserRole().equals(UserRole.STUDENT)){
+            log.warn("<< adminLogin: ADMIN role required");
+            return new Response(Message.AUTHENTICATION_FAILED);
+        }
+
+        if (encoder.matches(loginDto.password(), user.getPassword())){
+            Map<String, String> token = getToken(user);
+            log.info("<< adminLogin: Successfully logged in");
+            return new Response(Message.SUCCESS, token);
+        }
+
+        log.warn("<< adminLogin: Authentication failed");
+        return new Response(Message.AUTHENTICATION_FAILED);
+    }
 
     /**
      * Generates a JWT token for a user after successful login or registration.

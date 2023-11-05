@@ -7,4 +7,6 @@ import com.zero.studentdashboard.model.Response;
 public interface UserService{
     Response register(UserDto userDto);
     Response login(LoginDto loginDto);
+
+    Response adminlLogin(LoginDto loginDto);
 }
