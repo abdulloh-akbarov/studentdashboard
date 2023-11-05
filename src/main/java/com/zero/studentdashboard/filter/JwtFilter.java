@@ -33,8 +33,11 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         List<AntPathRequestMatcher> matchers = Arrays.asList(
-                new AntPathRequestMatcher("/admin/**"),
-                new AntPathRequestMatcher("/login")
+                new AntPathRequestMatcher("users/**"),
+                new AntPathRequestMatcher("/admin/login"),
+                new AntPathRequestMatcher("/countries/all"),
+                new AntPathRequestMatcher("/courses/all/**"),
+                new AntPathRequestMatcher("/universities/all/**")
         );
         return matchers.stream().anyMatch(m -> m.matches(request));
     }
@@ -75,7 +78,9 @@ public class JwtFilter extends OncePerRequestFilter {
                 // Checks whether user's role is student.
                 if (userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("STUDENT"))) {
                     // Student is allowed to send request to specific path it checks whether it is valid
-                    if (request.getRequestURI().equals("/applications/create") && request.getMethod().equals("POST")) {
+                    if ((request.getRequestURI().equals("/applications/create") ||
+                            request.getRequestURI().equals("/applications/user")) &&
+                                    request.getMethod().equals("POST")) {
                         // Allows access to Student to use the endpoint.
                         chain.doFilter(request, response);
                     } else {

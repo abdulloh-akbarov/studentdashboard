@@ -67,8 +67,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((request) ->
                         request
-                                .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/admin/login")).permitAll()
+                                .requestMatchers(
+                                        new AntPathRequestMatcher("users/**"),
+                                        new AntPathRequestMatcher("/admin/login"),
+                                        new AntPathRequestMatcher("/countries/all"),
+                                        new AntPathRequestMatcher("/courses/all/**"),
+                                        new AntPathRequestMatcher("/universities/all/**")                                 ).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling((exception) ->

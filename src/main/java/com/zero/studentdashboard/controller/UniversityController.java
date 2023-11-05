@@ -8,9 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Controller for handling university-related operations, such as retrieving universities by country and adding new universities.
- */
 @Log4j2
 @RestController
 @RequiredArgsConstructor

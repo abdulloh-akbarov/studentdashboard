@@ -4,3 +4,6 @@ spring:
     username: username
     password: password
     url: jdbc:postgresql://localhost:5432/student_dashboard
+  jpa:
+    hibernate:
+      ddl-auto: update

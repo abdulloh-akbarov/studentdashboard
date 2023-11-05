@@ -31,7 +31,7 @@ public class Application {
     private String email;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
     @ManyToOne
