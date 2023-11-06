@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface UniversityRepository extends JpaRepository<University, Long> {
     List<University> findAllByCountry_Id(Long countryId);
 
-    Optional<University> findByNameAndCountry(String name, Country country);
+    Optional<University> findByUniversityNameAndCountry(String universityName, Country country);
 }

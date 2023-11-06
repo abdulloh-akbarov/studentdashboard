@@ -9,22 +9,22 @@ import jakarta.validation.constraints.NotBlank;
  * This record is used to create dto for Course.
  *
  * @param id Course id.
- * @param name Unique course name.
+ * @param courseName Unique course name.
  */
 public record CourseDto(
         Long id,
         @NotBlank(message = "UniversityId cannot be blank.")
         Long universityId,
 
-        @NotBlank(message = "Name cannot be blank.")
-        String name) {
+        @NotBlank(message = "Course name cannot be blank.")
+        String courseName) {
 
         /**
          * Converts the DTO to an entity representation.
          *
-         * @return A Cource entity representing the application information.
+         * @return A Course entity representing the application information.
          */
         public Course toEntity(){
-                return new Course(id, name, null);
+                return new Course(id, courseName, null);
         }
 }

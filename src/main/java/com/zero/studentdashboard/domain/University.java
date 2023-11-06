@@ -24,13 +24,14 @@ public class University {
     private Long id;
     
     @Column(nullable = false)
-    private String name;
+    private String universityName;
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "country_id", nullable = false)
     private Country country;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Course> courses = new ArrayList<>();
 }

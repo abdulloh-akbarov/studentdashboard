@@ -61,7 +61,7 @@ public class UniversityServiceImpl implements UniversityService {
             return new Response(Message.COUNTRY_NOT_FOUND);
         }
 
-        University university = repository.findByNameAndCountry(universityDto.name(), country).orElse(null);
+        University university = repository.findByUniversityNameAndCountry(universityDto.universityName(), country).orElse(null);
         if (university != null){
             log.warn("<< save: No university found");
             return new Response(Message.UNIVERSITY_EXIST);

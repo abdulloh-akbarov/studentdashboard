@@ -6,4 +6,4 @@ spring:
     url: jdbc:postgresql://localhost:5432/student_dashboard
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create

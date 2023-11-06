@@ -9,15 +9,15 @@ import jakarta.validation.constraints.NotBlank;
  * This record is used to create dto for University.
  *
  * @param id University id.
- * @param name Unique University name.
+ * @param universityName Unique University name.
  */
 public record UniversityDto(
         Long id,
         @NotBlank(message = "countryId cannot be blank.")
         Long countryId,
         @NotBlank(message = "Name cannot be blank.")
-        String name) {
+        String universityName) {
         public University toEntity(){
-                return new University(id, name, null, null);
+                return new University(id, universityName, null, null);
         }
 }
