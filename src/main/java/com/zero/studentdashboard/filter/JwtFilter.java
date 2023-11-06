@@ -33,7 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         List<AntPathRequestMatcher> matchers = Arrays.asList(
-                new AntPathRequestMatcher("users/**"),
+                new AntPathRequestMatcher("/users/**"),
                 new AntPathRequestMatcher("/admin/login"),
                 new AntPathRequestMatcher("/countries/all"),
                 new AntPathRequestMatcher("/courses/all/**"),
