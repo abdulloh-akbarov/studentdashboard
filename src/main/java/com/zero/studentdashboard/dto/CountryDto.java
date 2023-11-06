@@ -9,12 +9,12 @@ import jakarta.validation.constraints.NotBlank;
  * This record is used to create dto for Country.
  *
  * @param id Course id.
- * @param name Unique course name.
+ * @param countryName Unique country name.
  */
 public record CountryDto(
         Long id,
-        @NotBlank(message = "Name cannot be blank.")
-        String name) {
+        @NotBlank(message = "Country name cannot be blank.")
+        String countryName) {
 
         /**
          * Converts the DTO to an entity representation.
@@ -22,6 +22,6 @@ public record CountryDto(
          * @return A Country entity representing the application information.
          */
         public Country toEntity(){
-                return new Country(id, name, null);
+                return new Country(id, countryName, null);
         }
 }

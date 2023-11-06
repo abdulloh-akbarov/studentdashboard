@@ -24,7 +24,7 @@ public class Country {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String countryName;
 
     @JsonIgnore
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

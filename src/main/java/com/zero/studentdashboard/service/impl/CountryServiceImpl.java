@@ -49,9 +49,9 @@ public class CountryServiceImpl implements CountryService {
     @Transactional
     public Response save(CountryDto countryDto) {
         log.info(">> save: " + countryDto);
-        boolean existsByName = repository.existsByName(countryDto.name());
+        boolean existsByName = repository.existsByName(countryDto.countryName());
         if (existsByName) {
-            log.warn("<< save: Country exists by name=" + countryDto.name());
+            log.warn("<< save: Country exists by name=" + countryDto.countryName());
             return new Response(Message.COUNTRY_EXIST);
         }
 

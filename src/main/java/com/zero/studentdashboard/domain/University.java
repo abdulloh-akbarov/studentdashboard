@@ -24,7 +24,7 @@ public class University {
     private Long id;
     
     @Column(nullable = false)
-    private String name;
+    private String universityName;
 
     @ManyToOne
     @JsonIgnore

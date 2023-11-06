@@ -63,7 +63,7 @@ public class CourseServiceImpl implements CourseService {
             return new Response(Message.UNIVERSITY_NOT_FOUND);
         }
 
-        Course course = repository.findByNameAndUniversity(courseDto.name(), university).orElse(null);
+        Course course = repository.findByNameAndUniversity(courseDto.courseName(), university).orElse(null);
         if (course != null){
             log.warn("<< save: Course already exists");
             return new Response(Message.COURSE_EXIST);
