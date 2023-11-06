@@ -7,9 +7,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -72,15 +74,19 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                usernamePasswordAuthenticationToken
+                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+
                 // Checks whether user's role is student.
                 if (userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("STUDENT"))) {
                     // Student is allowed to send request to specific path it checks whether it is valid
-                    if ((request.getRequestURI().equals("/applications/create") ||
-                            request.getRequestURI().equals("/applications/user")) &&
-                                    request.getMethod().equals("POST")) {
+                    if (request.getRequestURI().equals("/applications/create") ||
+                            request.getRequestURI().equals("/applications/user")) {
                         // Allows access to Student to use the endpoint.
                         chain.doFilter(request, response);
                     } else {
@@ -96,7 +102,5 @@ public class JwtFilter extends OncePerRequestFilter {
                 }
             }
         }
-        chain.doFilter(request, response);
     }
-
 }
