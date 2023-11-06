@@ -89,6 +89,11 @@ public class UserServiceImpl implements UserService {
             return new Response(Message.USER_NOT_FOUND);
         }
 
+        if (user.getUserRole().equals(UserRole.ADMIN)){
+            log.warn("<< adminLogin: STUDENT role required");
+            return new Response(Message.AUTHENTICATION_FAILED);
+        }
+
         if (encoder.matches(loginDto.password(), user.getPassword())){
             Map<String, String> token = getToken(user);
             log.info("<< login: Successfully logged in");
