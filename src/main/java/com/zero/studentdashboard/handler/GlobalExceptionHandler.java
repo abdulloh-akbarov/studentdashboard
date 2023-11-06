@@ -1,6 +1,7 @@
 package com.zero.studentdashboard.handler;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,18 +13,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Global exception handler for handling validation errors in the application.
- * <p>
- * This class is responsible for capturing validation errors triggered by the validation of request parameters or payloads.
- * When a validation error occurs, it returns a response containing a map of field errors with their corresponding error messages.
- *
- * @see MethodArgumentNotValidException
- * @see FieldError
- */
 @ControllerAdvice
-public class ValidationExceptionHandler {
+public class GlobalExceptionHandler {
 
+    /**
+     * Handles MethodArgumentNotValidException and returns a map of field errors with error messages.
+     *
+     * @param ex The MethodArgumentNotValidException to be handled.
+     * @return A map of field errors with their corresponding error messages.
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -34,5 +32,17 @@ public class ValidationExceptionHandler {
             errors.put(fieldError.getField(), fieldError.getDefaultMessage());
         }
         return errors;
+    }
+
+    /**
+     * Handles AccessDeniedException and returns an error message for unauthorized access.
+     *
+     * @param ex The AccessDeniedException to be handled.
+     * @return A message indicating that the user is not authorized to access the resource.
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String handleAccessDeniedException(AccessDeniedException ex) {
+        return "You are not authorized to access this resource.";
     }
 }
